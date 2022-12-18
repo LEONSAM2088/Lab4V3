@@ -94,7 +94,7 @@ public class AuthController {
     }
     @PostMapping("checkToken")
     public  ResponseEntity<?> checkToken(HttpServletRequest req) {
-        ResponseEntity.status(401).build();
+
         javax.servlet.http.Cookie[] cookies = req.getCookies();
         if(cookies==null) {
            return ResponseEntity.status(401).build();
