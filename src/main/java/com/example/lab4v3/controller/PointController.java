@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/point")
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 4800, allowCredentials = "true")
 public class PointController {
     @Autowired
     PointRepository pointRepository;
