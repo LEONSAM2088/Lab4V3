@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     UserDetailServiceImpl userDetailService;
     @Autowired

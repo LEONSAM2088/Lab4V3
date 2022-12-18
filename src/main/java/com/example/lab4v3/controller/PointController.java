@@ -15,7 +15,7 @@ import com.example.lab4v3.model.Point;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/api/point")
 public class PointController {
     @Autowired
