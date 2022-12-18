@@ -1,5 +1,6 @@
 package com.example.lab4v3.controller;
 
+import com.example.lab4v3.PointCredentialsRequest;
 import com.example.lab4v3.model.User;
 import com.example.lab4v3.repository.PointRepository;
 import com.example.lab4v3.service.CheckPointService;
@@ -32,10 +33,13 @@ public class PointController {
     }
 
     @PostMapping(path = "/check")
-    public ResponseEntity<?> checkPoint(@RequestBody Point point) {
-        point.setInArea(checkPointService.checkInArea(point));
-        pointRepository.save(point);
+    public ResponseEntity<?> checkPoint(@RequestBody PointCredentialsRequest point) {
+
+        Point pointFromRepository = new Point(point);
+
+        pointFromRepository.setInArea(checkPointService.checkInArea(pointFromRepository));
+        pointRepository.save(pointFromRepository);
         return ResponseEntity.ok()
-                .body(point);
+                .body(pointFromRepository);
     }
 }

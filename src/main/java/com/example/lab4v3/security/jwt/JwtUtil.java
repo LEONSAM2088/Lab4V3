@@ -1,4 +1,4 @@
-package com.example.lab4v3;
+package com.example.lab4v3.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

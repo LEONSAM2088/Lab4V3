@@ -1,10 +1,22 @@
 package com.example.lab4v3.model;
 
+import com.example.lab4v3.PointCredentialsRequest;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "t_point")
 public class Point {
+    public Point(float X, float Y, float R) {
+        this.X = X;
+        this.Y = Y;
+        this.R = R;
+    }
+    public Point(PointCredentialsRequest pointCredentialsRequest) {
+        this.X = pointCredentialsRequest.getX();
+        this.Y = pointCredentialsRequest.getY();
+        this.R = pointCredentialsRequest.getR();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,6 +29,10 @@ public class Point {
     private float R;
     @Column(name = "in_area")
     private boolean IsInArea;
+
+    public Point() {
+
+    }
 
 
     public boolean isInArea() {

@@ -1,18 +1,16 @@
 package com.example.lab4v3.controller;
 
 import com.example.lab4v3.AuthCredentialRequest;
-import com.example.lab4v3.JwtUtil;
+import com.example.lab4v3.security.jwt.JwtUtil;
 import com.example.lab4v3.model.User;
 import com.example.lab4v3.repository.UserRepository;
 import com.example.lab4v3.utils.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +24,6 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
-
     @Autowired
     private CustomPasswordEncoder passwordEncoder;
     @Autowired
@@ -61,8 +58,6 @@ public class AuthController {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-
     }
 
     @PostMapping("register")
