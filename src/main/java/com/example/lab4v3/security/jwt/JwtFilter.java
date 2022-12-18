@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
         response.setHeader("Access-Control-Allow-Credentials", "*");*/
-
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         javax.servlet.http.Cookie[] cookies = request.getCookies();
         if(cookies==null) {
