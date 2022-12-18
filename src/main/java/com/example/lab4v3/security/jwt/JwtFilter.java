@@ -32,11 +32,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        /*response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
-        response.setHeader("Access-Control-Allow-Credentials", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "*");*/
 
 
         javax.servlet.http.Cookie[] cookies = request.getCookies();
