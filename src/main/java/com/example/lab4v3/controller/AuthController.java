@@ -45,7 +45,7 @@ public class AuthController {
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .build();
+                    .body(user);
             /*return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,token
