@@ -13,6 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
@@ -85,5 +91,22 @@ public class AuthController {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+    @PostMapping("checkToken")
+    public  ResponseEntity<?> checkToken(HttpServletRequest req) {
+        ResponseEntity.status(401).build();
+        javax.servlet.http.Cookie[] cookies = req.getCookies();
+        if(cookies==null) {
+           return ResponseEntity.status(401).build();
+        }
+        final String token;
+        List<Cookie> cookieList = Arrays.stream(cookies).filter(c->c.getName().equals("token_data")).collect(Collectors.toList());
+        if(cookieList.size()!=0) {
+            token = cookieList.get(0).getValue();
+            boolean isValid = jwtUtil.checkToken(token);
+            return ResponseEntity.status(isValid?200:401).build();
+        }
+        return ResponseEntity.status(401).build();
+
     }
 }
