@@ -18,6 +18,7 @@ public class Point {
     @Column(name = "in_area")
     private boolean IsInArea;
 
+
     public boolean isInArea() {
         return IsInArea;
     }

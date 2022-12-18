@@ -2,6 +2,7 @@ package com.example.lab4v3.controller;
 
 import com.example.lab4v3.model.User;
 import com.example.lab4v3.repository.PointRepository;
+import com.example.lab4v3.service.CheckPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,10 +18,14 @@ import java.util.List;
 public class PointController {
     @Autowired
     PointRepository pointRepository;
+    @Autowired
+    CheckPointService checkPointService;
+
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPoint(@AuthenticationPrincipal User user) {
 
         List<Point> points = pointRepository.findAll();
+
 
         return ResponseEntity.ok()
                 .body(points);
@@ -28,7 +33,7 @@ public class PointController {
 
     @PostMapping(path = "/check")
     public ResponseEntity<?> checkPoint(@RequestBody Point point) {
-
+        point.setInArea(checkPointService.checkInArea(point));
         pointRepository.save(point);
         return ResponseEntity.ok()
                 .body(point);

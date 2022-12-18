@@ -13,10 +13,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.http.HttpHeaders;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -31,11 +34,28 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(!StringUtils.hasText(header) || StringUtils.hasText(header) && !header.startsWith("Bearer ")) {
+
+        javax.servlet.http.Cookie[] cookies = request.getCookies();
+        if(cookies==null) {
             filterChain.doFilter(request, response);
             return;
         }
-        final String token = header.split(" ")[1].trim();
+        final String token;
+        List<Cookie> cookieList = Arrays.stream(cookies).filter(c->c.getName().equals("token_data")).collect(Collectors.toList());
+        if(cookieList.size()!=0) {
+           token = cookieList.get(0).getValue();
+
+        } else {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        //final String token = header.split(" ")[1].trim();
+       /* if(!StringUtils.hasText(header) || StringUtils.hasText(header) && !header.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }*/
+
         UserDetails userDetails = userRepository.findByUsername(jwtUtil.extractUsername(token)).orElse(null);
 
         if(!jwtUtil.validateToken(token, userDetails)) {
