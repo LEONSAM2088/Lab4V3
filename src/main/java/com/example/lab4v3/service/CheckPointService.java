@@ -20,7 +20,7 @@ public class CheckPointService {
         }
         // triangle
         if(X<=0 && Y <=0)
-            return Y >= X / 2 - R / 2;
+            return Y >= -X / 2 - R / 2;
         return false;
     }
 }
