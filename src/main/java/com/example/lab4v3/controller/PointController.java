@@ -29,7 +29,7 @@ public class PointController {
         return ResponseEntity.ok()
                 .body(points);
     }
-    @DeleteMapping(path = "")
+    @DeleteMapping(path = "all")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> deleteAllPoints() {
 
