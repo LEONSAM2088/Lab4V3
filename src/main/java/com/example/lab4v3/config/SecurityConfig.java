@@ -20,11 +20,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements CorsConfigurationSource {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailServiceImpl userDetailService;
@@ -41,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Cors
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.csrf().disable().cors().disable();
+       http.csrf().disable().cors().and();
        http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
 
        http = http.exceptionHandling()
@@ -59,13 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Cors
 
     }
 
-    @Override
+   /* @Override
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
         config.setMaxAge(3600L);
         return config;
-    }
+    }*/
 }
