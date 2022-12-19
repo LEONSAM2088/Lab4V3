@@ -20,7 +20,7 @@ public class PointController {
     CheckPointService checkPointService;
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    @CrossOrigin(origins = "{http://192.168.1.173:3000, http://localhost:3000}", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = {"http://192.168.1.173:3000", "http://localhost:3000"}, allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> getPoint() {
 
         List<Point> points = pointRepository.findAll();
@@ -30,7 +30,7 @@ public class PointController {
                 .body(points);
     }
     @DeleteMapping(path = "all")
-    @CrossOrigin(origins = "{http://192.168.1.173:3000, http://localhost:3000}", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = {"http://192.168.1.173:3000", "http://localhost:3000"}, allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> deleteAllPoints() {
 
 
@@ -39,7 +39,7 @@ public class PointController {
         return ResponseEntity.ok().build();
     }
     @PostMapping(path = "/check")
-    @CrossOrigin(origins = "{http://192.168.1.173:3000, http://localhost:3000}", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = {"http://192.168.1.173:3000", "http://localhost:3000"}, allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> checkPoint(@RequestBody PointCredentialsRequest point) {
 
         Point pointFromRepository = new Point(point);
