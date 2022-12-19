@@ -39,6 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Credentials", "*");*/
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "content-type");
+        response.setStatus(200);
         javax.servlet.http.Cookie[] cookies = request.getCookies();
         if(cookies==null) {
             filterChain.doFilter(request, response);
