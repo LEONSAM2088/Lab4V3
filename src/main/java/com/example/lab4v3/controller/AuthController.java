@@ -65,7 +65,7 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = "{http://192.168.1.173:3000, http://localhost:3000}", allowCredentials = "true", allowedHeaders = "*")
     public  ResponseEntity<?> register(@RequestBody AuthCredentialRequest req) {
         try {
             String login = req.getUsername();
@@ -95,7 +95,7 @@ public class AuthController {
         }
     }
     @PostMapping("checkToken")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = "{http://192.168.1.173:3000, http://localhost:3000}", allowCredentials = "true", allowedHeaders = "*")
     public  ResponseEntity<?> checkToken(HttpServletRequest req) {
 
         javax.servlet.http.Cookie[] cookies = req.getCookies();
