@@ -20,6 +20,7 @@ public class PointController {
     CheckPointService checkPointService;
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> getPoint() {
 
         List<Point> points = pointRepository.findAll();
@@ -30,6 +31,7 @@ public class PointController {
     }
 
     @PostMapping(path = "/check")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> checkPoint(@RequestBody PointCredentialsRequest point) {
 
         Point pointFromRepository = new Point(point);
