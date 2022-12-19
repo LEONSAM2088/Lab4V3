@@ -17,5 +17,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
                 .exposedHeaders("custom-header1", "custom-header2")
                 .allowCredentials(true)
                 .maxAge(4800);
+
     }
 } 

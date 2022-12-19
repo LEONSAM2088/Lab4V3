@@ -1,6 +1,7 @@
 package com.example.lab4v3.security.jwt;
 
 import com.example.lab4v3.repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,13 +34,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        /*response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Max-Age", "3600");
+/*        response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
         response.setHeader("Access-Control-Allow-Credentials", "*");*/
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "content-type");
         response.setStatus(200);
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
         javax.servlet.http.Cookie[] cookies = request.getCookies();
         if(cookies==null) {
             filterChain.doFilter(request, response);
@@ -60,10 +62,16 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }*/
+        UserDetails userDetails = null;
+        try {
+            userDetails = userRepository.findByUsername(jwtUtil.extractUsername(token)).orElse(null);
+        }catch (ExpiredJwtException e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        UserDetails userDetails = userRepository.findByUsername(jwtUtil.extractUsername(token)).orElse(null);
+        if(userDetails==null) return;
 
-        assert userDetails != null;
         if(!jwtUtil.validateToken(token, userDetails)) {
             filterChain.doFilter(request, response);
             return;
