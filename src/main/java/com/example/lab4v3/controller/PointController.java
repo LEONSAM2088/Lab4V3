@@ -29,7 +29,15 @@ public class PointController {
         return ResponseEntity.ok()
                 .body(points);
     }
+    @DeleteMapping(path = "")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+    public ResponseEntity<?> deleteAllPoints() {
 
+
+        pointRepository.deleteAll();
+
+        return ResponseEntity.ok().build();
+    }
     @PostMapping(path = "/check")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<?> checkPoint(@RequestBody PointCredentialsRequest point) {
